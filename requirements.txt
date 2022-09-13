@@ -1,0 +1,11 @@
+requests[security]
+flask
+gunicorn
+matplotlib
+openpyxl
+pandas
+pyodbc
+xlrd
+neo4j
+PyPDF2
+pdfminer
