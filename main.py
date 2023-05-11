@@ -52,27 +52,63 @@ def main():
 
     print(len(lines))
 
-    for line in lines:
-        line_txt = ' '.join(w[0] for w in line)
-        print('~' + line_txt)
+    #for line in lines:
+    #    line_txt = ' '.join(w[0] for w in line)
+    #    print('~' + line_txt)
+
+        
     print('-'*50)
+    
     sorted_lines = sorted(lines, key = lambda x:x[0][2][0])
+
+    last_x_cords = []
+    first_x_cords = []
 
     for line in sorted_lines:
         line_txt = ' '.join(w[0] for w in line)
         avg_line_ht = statistics.mean([w[4][3]-w[4][0] for w in line])
         #print('~ ' + str(avg_line_ht) + ' ~ ' + line_txt)
-        print(str(round(avg_line_ht, 1)))
+        #print(str(round(avg_line_ht, 1)))
 
         char_ht_lst = [round(w[4][3]-w[4][0],1) for w in line] 
         temp = ' '.join(str(char_ht_lst))
-        print(temp)
+        #print(temp)
+
+        #sort words based on position1
+        sorted_line = sorted(line, key = lambda x:x[1][0])
+        sorted_line_txt = ' '.join(w[0] for w in sorted_line)
+
+        #print(line_txt)
+        #print(sorted_line_txt)
+
+        last_x_cords.append(sorted_line[-1][1][3])
+        first_x_cords.append(sorted_line[0][1][0])
+
+    #print(last_x_cords)
+    #print(max(last_x_cords))
+
+    x_nums = [*range(min(first_x_cords), max(last_x_cords))]
+    
+    print('-'*50)
+    for i in range(len(sorted_lines)-1, len(sorted_lines)-20, -1):
+        line = sorted_lines[i]
+        sorted_line = sorted(line, key = lambda x:x[1][0])
+        sorted_line_txt = ' '.join(w[0] for w in sorted_line)
+        #print(sorted_line_txt)
+
+        for word in sorted_line:
+            for j in range(word[1][1], word[1][2]):
+                if j in x_nums:
+                    x_nums.remove(j)
+
+    print(x_nums)
 
 #arr = [30,31,29,30]
 #print(np.percentile(arr, 90))
-#print(np.mean(arr))
+#print(np.mean(arr)
 
 main()
+#print([*range(0, 90)])
     
     
 
