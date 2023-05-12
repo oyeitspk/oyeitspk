@@ -87,21 +87,59 @@ def main():
     #print(last_x_cords)
     #print(max(last_x_cords))
 
-    x_nums = [*range(min(first_x_cords), max(last_x_cords))]
+    min_x_cord = min(first_x_cords)
+    max_x_cord = max(last_x_cords)
+
+    col1_lines = []
+    col2_lines = []
+
+    copy_sorted_lines = sorted_lines.copy()
+
+    # checking based on line-spacing
+    prev_bottom_y_cord = 0
+    for line in sorted_lines:
+        top_left_y_cord_of_first_word = line[0][4][0]
+        bottom_left_y_cord_of_first_word = line[0][4][3]
+        avg_top_y_cord = statistics.mean([w[4][0] for w in line])
+        avg_bottom_y_cord = statistics.mean([w[4][3] for w in line])
+        #print(avg_top_y_cord - prev_bottom_y_cord)
+        prev_bottom_y_cord = avg_bottom_y_cord
+        print(avg_top_y_cord)
+        print(avg_bottom_y_cord)
+        
     
     print('-'*50)
-    for i in range(len(sorted_lines)-1, len(sorted_lines)-20, -1):
-        line = sorted_lines[i]
+    #for i in range(len(sorted_lines)-1, -1, -1):
+    for i in range(0, len(copy_sorted_lines) -1):       
+        x_nums = [*range(min_x_cord, max_x_cord)]
+        line = copy_sorted_lines[i]
         sorted_line = sorted(line, key = lambda x:x[1][0])
         sorted_line_txt = ' '.join(w[0] for w in sorted_line)
         #print(sorted_line_txt)
 
         for word in sorted_line:
-            for j in range(word[1][1], word[1][2]):
+            for j in range(word[3][0], word[3][1]): #check indices
                 if j in x_nums:
                     x_nums.remove(j)
 
-    print(x_nums)
+        middle_x_cord = (min_x_cord + max_x_cord) / 2
+
+        col1_line = []
+        col2_line = []
+
+        if(middle_x_cord in x_nums):
+            for word in sorted_line:
+                if (word[3][1] < middle_x_cord and word[3][2] < middle_x_cord):
+                    col1_line.append(word)
+                if(word[3][0] > middle_x_cord and word[3][3] > middle_x_cord):
+                    col2_line.append(word)
+            sorted_lines.remove(line)
+            col1_lines.append(col1_line)
+            col2_lines.append(col2_line)
+
+    
+
+
 
 #arr = [30,31,29,30]
 #print(np.percentile(arr, 90))
