@@ -168,6 +168,32 @@ def main():
 
 main()
 #print([*range(0, 90)])
+
+
+
+				
+	print('')
+    print('..content..')
+    for line in sorted_lines:
+        line_txt = ' '.join(w[0] for w in line)
+        print(line_txt)
+
+    print('')
+    print('..commentary col 1..')
+    for line in col1_lines:
+        line_txt = ' '.join(w[0] for w in line)
+        print(line_txt)
+
+    print('')
+    print('..commentary col 2..')
+    for line in col2_lines:
+        line_txt = ' '.join(w[0] for w in line)
+        print(line_txt)
+
+
+    print(x_nums)
+    print(min(first_x_cords), max(last_x_cords))
+    print((min(first_x_cords)+max(last_x_cords))/2)
     
     
 
