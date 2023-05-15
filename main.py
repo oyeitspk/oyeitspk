@@ -1,11 +1,11 @@
 import json
 import statistics
-#import numpy as np
+import numpy as np
 
 print('*********** hello from main app ***********')
 
 def main():
-    with open('file\9037.json') as json_file:
+    with open('file/9037_0255.json') as json_file:
         data = json.load(json_file)
         
     blocks = data["textAnnotations"][1:]
@@ -18,10 +18,10 @@ def main():
     for block in blocks:
         
         vertices = block['boundingPoly']['vertices']
-        #print(f'({vertices[0]["x"]}, {vertices[0]["y"]}) \t ({vertices[1]["x"]}, {vertices[1]["y"]})')
-        #print('\t' + block['description'])
-        #print(f'({vertices[3]["x"]}, {vertices[3]["y"]}) \t ({vertices[2]["x"]}, {vertices[2]["y"]})')
-        #print('\n')
+        # print(f'({vertices[0]["x"]}, {vertices[0]["y"]}) \t ({vertices[1]["x"]}, {vertices[1]["y"]})')
+        # print('\t' + block['description'])
+        # print(f'({vertices[3]["x"]}, {vertices[3]["y"]}) \t ({vertices[2]["x"]}, {vertices[2]["y"]})')
+        # print('\n')
 
         y_cords = [c['y'] for c in vertices]
         y_cords_sorted = sorted(y_cords)
@@ -41,8 +41,9 @@ def main():
         #else:
         for line in lines:
             line_y_cords = [w[2][0] for w in line]
-            avg_y = statistics.mean(line_y_cords)
-            if abs(word[2][0]-avg_y) < 15:
+            avg_y = np.percentile(line_y_cords, 50)
+            # avg_y = statistics.mean(line_y_cords)
+            if abs(word[2][0]-avg_y) < 25:
                 line.append(word)
                 word_pushed = True
                 break
@@ -50,7 +51,9 @@ def main():
         if not word_pushed:
             lines.append([word])
 
+    print('--- no. of lines ---')
     print(len(lines))
+    print('-'*30)
 
     #for line in lines:
     #    line_txt = ' '.join(w[0] for w in line)
@@ -97,15 +100,21 @@ def main():
 
     # checking based on line-spacing
     prev_bottom_y_cord = 0
+    prev_bottom_y_cord_2 = 0
+
     for line in sorted_lines:
         top_left_y_cord_of_first_word = line[0][4][0]
         bottom_left_y_cord_of_first_word = line[0][4][3]
+        avg_top_y_cord_2 = np.percentile([w[4][0] for w in line], 50)
+        avg_bottom_y_cord_2 = np.percentile([w[4][3] for w in line], 50)
         avg_top_y_cord = statistics.mean([w[4][0] for w in line])
         avg_bottom_y_cord = statistics.mean([w[4][3] for w in line])
-        #print(avg_top_y_cord - prev_bottom_y_cord)
+        print(avg_top_y_cord - prev_bottom_y_cord)
+        print(avg_top_y_cord_2 - prev_bottom_y_cord_2)
         prev_bottom_y_cord = avg_bottom_y_cord
-        print(avg_top_y_cord)
-        print(avg_bottom_y_cord)
+        prev_bottom_y_cord_2 = avg_bottom_y_cord_2
+        # print(avg_top_y_cord)
+        # print(avg_bottom_y_cord)
         
     
     print('-'*50)
@@ -133,12 +142,24 @@ def main():
                     col1_line.append(word)
                 if(word[3][0] > middle_x_cord and word[3][3] > middle_x_cord):
                     col2_line.append(word)
-            sorted_lines.remove(line)
+            #sorted_lines.remove(line)
             col1_lines.append(col1_line)
             col2_lines.append(col2_line)
 
     
-
+    for line in sorted_lines:
+        for word in line:
+            pass
+            # print(f'{word[4][0]}\t\t\t{word[4][1]}')
+            # print(f'\t{word[0]}')
+            # print(f'{word[4][3]}\t\t\t{word[4][2]}')
+        a1 = ' '.join([str(word[4][0]) for word in line])
+        b1 = ' '.join([str(word[4][3]) for word in line])
+        c1 = ' '.join([word[0] for word in line])
+        print(a1)
+        print(c1)
+        print(b1)
+        print('-----------')
 
 
 #arr = [30,31,29,30]
