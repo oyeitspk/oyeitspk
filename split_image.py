@@ -56,7 +56,7 @@ import cv2
 import numpy as np
 
 # Load image, grayscale, Gaussian blur, Otsu's threshold
-image = cv2.imread(r'Format-2/9037_0255.jpg')
+image = cv2.imread(r'Format-2/rm2.jpg')
 #image = cv2.imread(r'Format-2/IMG-20230212-WA0008_1_1.jpg')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray, (7,7), 0)
@@ -77,7 +77,7 @@ for c in cnts:
     #cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
     cropped = image[y:(y+h), x:(x+w)]
     #cv2.imshow("cropped", cropped)
-    cv2.imwrite(f'Format-2/9037_0255_x{count}.jpg',cropped)
+    cv2.imwrite(f'rm2_x{count}.jpg',cropped)
     count += 1
 
 # cv2.imshow('thresh', thresh)
