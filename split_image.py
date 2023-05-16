@@ -57,6 +57,7 @@ import numpy as np
 
 # Load image, grayscale, Gaussian blur, Otsu's threshold
 image = cv2.imread(r'Format-2/9037_0255.jpg')
+#image = cv2.imread(r'Format-2/IMG-20230212-WA0008_1_1.jpg')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray, (7,7), 0)
 thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
@@ -68,22 +69,20 @@ dilate = cv2.dilate(thresh, kernel, iterations=4)
 # Find contours and draw rectangle
 cnts = cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-print(cnts)
 
+count = 1
+for c in cnts:
+    x,y,w,h = cv2.boundingRect(c)
+    print(x,y,w,h)
+    #cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
+    cropped = image[y:(y+h), x:(x+w)]
+    #cv2.imshow("cropped", cropped)
+    cv2.imwrite(f'Format-2/9037_0255_x{count}.jpg',cropped)
+    count += 1
 
-# count = 1
-# for c in cnts:
-#     x,y,w,h = cv2.boundingRect(c)
-#     print(x,y,w,h)
-#     #cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
-#     cropped = image[y:(y+h), x:(x+w)]
-#     #cv2.imshow("cropped", cropped)
-#     cv2.imwrite(f'Format-2/9037_0255_x{count}.jpg',cropped)
-#     count += 1
-
-# # cv2.imshow('thresh', thresh)
-# # cv2.imshow('dilate', dilate)
-# # cv2.imshow('image', image)
+# cv2.imshow('thresh', thresh)
+# cv2.imshow('dilate', dilate)
+# cv2.imshow('image', image)
 # # cv2.waitKey()
 
 
