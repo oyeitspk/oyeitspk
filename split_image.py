@@ -68,11 +68,43 @@ dilate = cv2.dilate(thresh, kernel, iterations=4)
 # Find contours and draw rectangle
 cnts = cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-for c in cnts:
-    x,y,w,h = cv2.boundingRect(c)
-    cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
+print(cnts)
 
-cv2.imshow('thresh', thresh)
-cv2.imshow('dilate', dilate)
-cv2.imshow('image', image)
-cv2.waitKey()
+
+# count = 1
+# for c in cnts:
+#     x,y,w,h = cv2.boundingRect(c)
+#     print(x,y,w,h)
+#     #cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
+#     cropped = image[y:(y+h), x:(x+w)]
+#     #cv2.imshow("cropped", cropped)
+#     cv2.imwrite(f'Format-2/9037_0255_x{count}.jpg',cropped)
+#     count += 1
+
+# # cv2.imshow('thresh', thresh)
+# # cv2.imshow('dilate', dilate)
+# # cv2.imshow('image', image)
+# # cv2.waitKey()
+
+
+###################################################################
+
+
+# import numpy as np
+# import cv2
+
+# img = cv2.imread('Format-2/9037_0255.jpg')
+
+# gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+# #play with parameters that all I changed in answer
+# _,thresh = cv2.threshold(gray,20,255,cv2.THRESH_BINARY)
+
+# # and here are 3 value returned not 2 
+# contours,_ = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+# count = 1
+# print(contours)
+# for cnt in contours:
+#     x,y,w,h = cv2.boundingRect(cnt)
+#     crop = img[y:y+h,x:x+w]
+#     cv2.imwrite(f'Format-2/9037_0255_xx{count}.jpg',crop)
+#     count += 1
