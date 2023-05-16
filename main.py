@@ -193,8 +193,28 @@ def main():
 #print(np.percentile(arr, 90))
 #print(np.mean(arr)
 
-main()
+#main()
 #print([*range(0, 90)])
+
+def main2():
+    with open('file/9037_0255.json') as json_file:
+        data = json.load(json_file)
+
+    blocks = data["fullTextAnnotation"]['pages'][0]['blocks']
+
+    for block in blocks:
+        print('~~block~~')
+        paras = block['paragraphs']
+        for para in paras:
+            #print('~~~para~~~')
+            para_txt = ''
+            words = para['words']
+            for word in words:
+                word_txt = ''.join([s['text'] for s in word['symbols']])
+                para_txt += ' ' + word_txt
+            print(para_txt)
+
+main2()
 
 
 
