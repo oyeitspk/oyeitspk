@@ -7,7 +7,7 @@ print('*********** hello from main app ***********')
 def main():
     with open('file/9037_0255.json') as json_file:
         data = json.load(json_file)
-        
+
     blocks = data["textAnnotations"][1:]
     #print(data)
 
@@ -16,7 +16,7 @@ def main():
     prev_y = None
 
     for block in blocks:
-        
+
         vertices = block['boundingPoly']['vertices']
         # print(f'({vertices[0]["x"]}, {vertices[0]["y"]}) \t ({vertices[1]["x"]}, {vertices[1]["y"]})')
         # print('\t' + block['description'])
@@ -59,9 +59,9 @@ def main():
     #    line_txt = ' '.join(w[0] for w in line)
     #    print('~' + line_txt)
 
-        
+
     print('-'*50)
-    
+
     sorted_lines = sorted(lines, key = lambda x:x[0][2][0])
 
     last_x_cords = []
@@ -69,11 +69,15 @@ def main():
 
     for line in sorted_lines:
         line_txt = ' '.join(w[0] for w in line)
-        avg_line_ht = statistics.mean([w[4][3]-w[4][0] for w in line])
+        avg_line_ht = statistics.mean([w[4][3]-w[4][0] for w in line[:2]])
+        avg_line_ht2 = np.percentile([w[4][3]-w[4][0] for w in line[:2]], 100)
         #print('~ ' + str(avg_line_ht) + ' ~ ' + line_txt)
-        #print(str(round(avg_line_ht, 1)))
+        print(line_txt)
+        print(str(round(avg_line_ht, 1)))
+        print(str(round(avg_line_ht2, 1)))
+        print('--')
 
-        char_ht_lst = [round(w[4][3]-w[4][0],1) for w in line] 
+        char_ht_lst = [round(w[4][3]-w[4][0],1) for w in line]
         temp = ' '.join(str(char_ht_lst))
         #print(temp)
 
@@ -109,17 +113,17 @@ def main():
         avg_bottom_y_cord_2 = np.percentile([w[4][3] for w in line], 50)
         avg_top_y_cord = statistics.mean([w[4][0] for w in line])
         avg_bottom_y_cord = statistics.mean([w[4][3] for w in line])
-        print(avg_top_y_cord - prev_bottom_y_cord)
-        print(avg_top_y_cord_2 - prev_bottom_y_cord_2)
+        # print(avg_top_y_cord - prev_bottom_y_cord)
+        # print(avg_top_y_cord_2 - prev_bottom_y_cord_2)
         prev_bottom_y_cord = avg_bottom_y_cord
         prev_bottom_y_cord_2 = avg_bottom_y_cord_2
         # print(avg_top_y_cord)
         # print(avg_bottom_y_cord)
-        
-    
+
+
     print('-'*50)
     #for i in range(len(sorted_lines)-1, -1, -1):
-    for i in range(0, len(copy_sorted_lines) -1):       
+    for i in range(0, len(copy_sorted_lines) -1):
         x_nums = [*range(min_x_cord, max_x_cord)]
         line = copy_sorted_lines[i]
         sorted_line = sorted(line, key = lambda x:x[1][0])
@@ -146,7 +150,7 @@ def main():
             col1_lines.append(col1_line)
             col2_lines.append(col2_line)
 
-    
+
     for line in sorted_lines:
         for word in line:
             pass
@@ -156,10 +160,33 @@ def main():
         a1 = ' '.join([str(word[4][0]) for word in line])
         b1 = ' '.join([str(word[4][3]) for word in line])
         c1 = ' '.join([word[0] for word in line])
-        print(a1)
-        print(c1)
-        print(b1)
+        # print(a1)
+        # print(c1)
+        # print(b1)
         print('-----------')
+
+    # print('')
+    # print('..content..')
+    # for line in sorted_lines:
+    #     line_txt = ' '.join(w[0] for w in line)
+    #     print(line_txt)
+
+    # print('')
+    # print('..commentary col 1..')
+    # for line in col1_lines:
+    #     line_txt = ' '.join(w[0] for w in line)
+    #     print(line_txt)
+
+    # print('')
+    # print('..commentary col 2..')
+    # for line in col2_lines:
+    #     line_txt = ' '.join(w[0] for w in line)
+    #     print(line_txt)
+
+
+    # print(x_nums)
+    # print(min(first_x_cords), max(last_x_cords))
+    # print((min(first_x_cords)+max(last_x_cords))/2)
 
 
 #arr = [30,31,29,30]
@@ -171,32 +198,11 @@ main()
 
 
 
-				
-	print('')
-    print('..content..')
-    for line in sorted_lines:
-        line_txt = ' '.join(w[0] for w in line)
-        print(line_txt)
-
-    print('')
-    print('..commentary col 1..')
-    for line in col1_lines:
-        line_txt = ' '.join(w[0] for w in line)
-        print(line_txt)
-
-    print('')
-    print('..commentary col 2..')
-    for line in col2_lines:
-        line_txt = ' '.join(w[0] for w in line)
-        print(line_txt)
 
 
-    print(x_nums)
-    print(min(first_x_cords), max(last_x_cords))
-    print((min(first_x_cords)+max(last_x_cords))/2)
-    
-    
 
 
-    
-    
+
+
+
+
