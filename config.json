@@ -1,0 +1,5 @@
+{
+    "CLOUD_VISION_API_URL" : "https://vision.googleapis.com/v1p4beta1/images:annotate",
+    "API_KEY" : "AIzaSyDhkbQgAYoniYSrgoYeuE-st5UNQLAUPzc",
+    "SOURCE_FOLDER" : "OCR/input"
+}
