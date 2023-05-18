@@ -77,7 +77,10 @@ def main():
 
         # sort words based on position1
         sorted_line = sorted(line, key=lambda x: x[1][0])
-        sorted_line_txt = ' '.join(w[0] for w in sorted_line)
+        line = sorted_line
+
+        print_line(line)
+        print_line(sorted_line)
 
         # print(line_txt)
         # print(sorted_line_txt)
@@ -85,8 +88,9 @@ def main():
         last_x_cords.append(sorted_line[-1][1][3])
         first_x_cords.append(sorted_line[0][1][0])
 
-    # print(last_x_cords)
-    # print(max(last_x_cords))
+    # printing line and last x cords of each line
+    for line in sorted_lines:
+        print(str(line[0][1][0]) + ' ' + str(line[-1][1][1])) 
 
     min_x_cord = min(first_x_cords)
     max_x_cord = max(last_x_cords)
@@ -105,9 +109,9 @@ def main():
         avg_bottom_y_cord = statistics.mean([w[4][3] for w in line])
         # print(avg_top_y_cord - prev_bottom_y_cord)
         prev_bottom_y_cord = avg_bottom_y_cord
-        print(avg_top_y_cord)
-        print(avg_bottom_y_cord)
-        print('\n')
+        #print(avg_top_y_cord)
+        #print(avg_bottom_y_cord)
+        #print('\n')
 
     len(sorted_lines)
     print('+'*50)
@@ -124,13 +128,21 @@ def main():
                 if j in x_nums:
                     x_nums.remove(j)
 
-        middle_x_cord = (min_x_cord + max_x_cord) / 2
+        middle_x_cord = int((min_x_cord + max_x_cord) / 2)
 
         # top left x cord of first word of current line
         line_min_x_cord = sorted_line[0][1][0]
         # top right x cord of last word of current line
         line_max_x_cord = sorted_line[-1][1][1]
         line_middle_x_cord = int((line_min_x_cord + line_max_x_cord) / 2)
+
+        middle_word_1 = None
+        middle_word_2 = None
+        for word in sorted_line:
+            if word[1][0] < middle_x_cord and word[1][1] > middle_x_cord:
+                middle_word_1 = word
+            if word[1][0] < line_middle_x_cord and word[1][1] > line_middle_x_cord:
+                middle_word_2 = word
 
         print_line(sorted_line)
         print(x_nums)
@@ -140,8 +152,8 @@ def main():
         col1_line = []
         col2_line = []
 
-        if (middle_x_cord not in x_nums):
-            if (line_middle_x_cord not in x_nums):
+        if (middle_x_cord not in x_nums and middle_word_1 is not None and middle_word_1 != '|'):
+            if (line_middle_x_cord not in x_nums  and middle_word_2 is not None and middle_word_2 != '|'):
                 print('..loop will break...')
                 break
             else:
