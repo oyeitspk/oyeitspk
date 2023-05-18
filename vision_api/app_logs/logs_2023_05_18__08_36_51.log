@@ -1,0 +1,6 @@
+root - 2023-05-18 08:36:51,817 - INFO - Prcessing file: rm2.jpg
+urllib3.connectionpool - 2023-05-18 08:36:51,841 - DEBUG - Starting new HTTPS connection (1): vision.googleapis.com:443
+urllib3.connectionpool - 2023-05-18 08:36:53,319 - DEBUG - https://vision.googleapis.com:443 "POST /v1p4beta1/images:annotate?key=AIzaSyDhkbQgAYoniYSrgoYeuE-st5UNQLAUPzc HTTP/1.1" 200 None
+cloudvisionapi - 2023-05-18 08:36:53,475 - INFO - Raw JSON saved as: OCR/input/Raw_ouptut/rm2.json
+root - 2023-05-18 08:36:53,515 - INFO - Successfully extracted text and commntary
+root - 2023-05-18 08:36:53,516 - INFO - Saved extracted data in file: OCR/input/rm2.jpg

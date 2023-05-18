@@ -1,7 +1,7 @@
 from base64 import b64encode
 from pylab import rcParams
 import json, requests, os, logging
-from app.global_config import config
+from global_config import config
 
 url = config['CLOUD_VISION_API_URL']
 api_key = config['API_KEY']
